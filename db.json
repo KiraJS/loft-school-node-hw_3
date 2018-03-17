@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "email": "test@test.com",
+      "password": "123"
+    },
+    {
+      "email": "test@test.com",
+      "password": "123"
+    },
+    {
+      "email": "test@test.com",
+      "password": ""
+    },
+    {
+      "email": "test@test.com",
+      "password": "12345"
+    },
+    {
+      "email": "test@test.com",
+      "password": "123445"
+    },
+    {
+      "email": "test@test.com",
+      "password": "12345"
+    },
+    {
+      "email": "test@test.com",
+      "password": "123"
+    },
+    {
+      "email": "test@test.com",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    },
+    {
+      "email": "qwe@qwe.ru",
+      "password": "123"
+    }
+  ]
+}
