@@ -1,42 +1,84 @@
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+const Koa = require('koa');
+const app = new Koa();
+const serve = require('koa-static')
 
-const index = require('./routes/index');
+const koaBody = require('koa-body');
 
-const app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+const Pug = require('koa-pug');
+app.pug = new Pug({
+  viewPath: './views'
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+const KoaRouter = require('koa-router');
+const router = new KoaRouter();
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapter = new FileSync('db.json');
+const db = low(adapter);
+db.defaults({ users: [], skills: {}, products: [], emails: [] }).write();
+
+
+/* GET home page. */
+router.get('/', function(ctx){
+  ctx.body = ctx.app.pug.render('pages/index');
 });
 
-module.exports = app;
+/* GET login page. */
+router.get('/login', function(ctx){
+  ctx.body = ctx.app.pug.render('pages/login');
+});
+
+/* GET admin page. */
+router.get('/admin', function(ctx){
+  ctx.body = ctx.app.pug.render('pages/admin');
+});
+
+/* POST login page */
+router.post('/login', function (ctx) {
+  console.log(ctx.request, ctx.request.body);
+  let currentUser = db.get('users').find({ email: ctx.request.body.email }).value();
+  if(currentUser && ctx.request.body.password === currentUser.password) {
+    db.get('users').push(ctx.request.body).write();
+    console.log('Успешная авторизация');
+    ctx.redirect('/admin');
+  } else {
+    db.get('users').push(ctx.request.body).write();
+    console.log('Создан новый пользователь');
+    ctx.redirect('/');
+  }
+});
+
+/* POST admin/skills page */
+router.post('/admin/skills', function (ctx) {
+  db.set('skills', ctx.request.body).write();
+});
+
+/* POST admin/upload page */
+router.post('/admin/upload', koaBody({
+  multipart: true,
+  formidable: {
+    uploadDir: './uploads',
+  }
+}), function(ctx){
+  const file = ctx.request.body.files[Object.keys(ctx.request.body.files)[0]];
+  console.log(file.path);
+  let product = {
+    imgpath: file.path + '.' + file.name.split('.').pop(),
+    name: ctx.request.body.fields.name,
+    price: ctx.request.body.fields.price
+  }
+  db.get('products').push(product).write();
+});
+
+/* POST home page. */
+router.post('/', function (ctx) {
+  db.set('emails', ctx.request.body).write();
+});
+
+app.use(serve('./public'));
+app.use(koaBody());
+app.use(router.routes());
+
+app.listen(5000);

@@ -71,19 +71,28 @@
     {
       "email": "qwe@qwe.ru",
       "password": "123"
+    },
+    {
+      "email": "newtest@test.com",
+      "password": "12345"
     }
   ],
   "skills": {
-    "age": "10",
-    "concerts": "10",
-    "cities": "10",
-    "years": "10"
+    "age": "9",
+    "concerts": "9",
+    "cities": "9",
+    "years": "9"
   },
   "products": [
     {
       "imgpath": "uploads/344510d18121fb73e950f2ac2d28935e.png",
       "name": "qwe",
       "price": "qwe"
+    },
+    {
+      "imgpath": "uploads/upload_255808aa759ab9bf2e8894962809a333.png",
+      "name": "testname",
+      "price": "987"
     }
   ],
   "emails": {
