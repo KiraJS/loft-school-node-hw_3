@@ -72,5 +72,23 @@
       "email": "qwe@qwe.ru",
       "password": "123"
     }
-  ]
+  ],
+  "skills": {
+    "age": "10",
+    "concerts": "10",
+    "cities": "10",
+    "years": "10"
+  },
+  "products": [
+    {
+      "imgpath": "uploads/344510d18121fb73e950f2ac2d28935e.png",
+      "name": "qwe",
+      "price": "qwe"
+    }
+  ],
+  "emails": {
+    "name": "Kira",
+    "email": "kira.shatulova@gmail.com",
+    "message": "test"
+  }
 }
